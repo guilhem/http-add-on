@@ -134,6 +134,7 @@ func (rec *HTTPScaledObjectReconciler) createOrUpdateApplicationResources(
 			int(httpso.Spec.ScaleTargetRef.Port),
 			httpso.Spec.ScaleTargetRef.Deployment,
 			targetPendingReqs,
+			httpso.Spec.Host,
 		),
 		httpso.ObjectMeta.Namespace,
 	); err != nil {

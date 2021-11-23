@@ -65,6 +65,8 @@ func (e *impl) IsActive(
 			Result: true,
 		}, nil
 	}
+
+	lggr.Info("scaledObject in isActive", "scaledObject", scaledObject, "scaledObjectMetadata", scaledObject.ScalerMetadata)
 	allCounts := e.pinger.counts()
 	hostCount, ok := allCounts[host]
 	if !ok {
@@ -92,6 +94,7 @@ func (e *impl) StreamIsActive(
 		case <-server.Context().Done():
 			return nil
 		case <-ticker.C:
+			e.lggr.Info("scaled object in stream", "scaledObject", scaledObject)
 			active, err := e.IsActive(server.Context(), scaledObject)
 			if err != nil {
 				e.lggr.Error(

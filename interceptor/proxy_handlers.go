@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"net/url"
 	"time"
 
 	"github.com/go-logr/logr"
@@ -64,9 +65,20 @@ func newForwardingHandler(
 			w.Write([]byte("Host not found in request"))
 			return
 		}
-		routingTarget, err := routingTable.Lookup(host)
+
+		u, err := url.Parse("http://" + host)
+		if err != nil {
+			w.WriteHeader(400)
+			w.Write([]byte("Can't parse host."))
+			return
+		}
+
+		lggr.Info("host got from req: ", "host", u.Hostname())
+
+		routingTarget, err := routingTable.Lookup(u.Hostname())
 		if err != nil {
 			w.WriteHeader(404)
+			lggr.Error(err, "looking up table failed")
 			w.Write([]byte(fmt.Sprintf("Host %s not found", r.Host)))
 			return
 		}

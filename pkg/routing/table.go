@@ -17,6 +17,7 @@ type Target struct {
 	Port                  int    `json:"port"`
 	Deployment            string `json:"deployment"`
 	TargetPendingRequests int32  `json:"target"`
+	Host                  string `json:"host"`
 }
 
 // NewTarget creates a new Target from the given parameters.
@@ -26,6 +27,7 @@ func NewTarget(
 	port int,
 	depl string,
 	target int32,
+	host string,
 ) Target {
 	return Target{
 		Host:                  host,
@@ -33,6 +35,7 @@ func NewTarget(
 		Port:                  port,
 		Deployment:            depl,
 		TargetPendingRequests: target,
+		Host:                  host,
 	}
 }
 
@@ -92,7 +95,7 @@ func (t *Table) Lookup(host string) (Target, error) {
 	defer t.l.RUnlock()
 	ret, ok := t.m[host]
 	if !ok {
-		return Target{}, ErrTargetNotFound
+		return Target{}, fmt.Errorf("target not found, current list: %v", t.m)
 	}
 	return ret, nil
 }
