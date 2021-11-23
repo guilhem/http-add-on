@@ -73,6 +73,7 @@ func TestStartUpdateLoop(t *testing.T) {
 	q := queue.NewFakeCounter()
 	table := NewTable()
 	table.AddTarget("host1", NewTarget(
+		"example.com",
 		"svc1",
 		8080,
 		"depl1",

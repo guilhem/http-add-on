@@ -12,6 +12,7 @@ import (
 var ErrTargetNotFound = errors.New("Target not found")
 
 type Target struct {
+	Host                  string `json:"host"`
 	Service               string `json:"service"`
 	Port                  int    `json:"port"`
 	Deployment            string `json:"deployment"`
@@ -20,12 +21,14 @@ type Target struct {
 
 // NewTarget creates a new Target from the given parameters.
 func NewTarget(
+	host string,
 	svc string,
 	port int,
 	depl string,
 	target int32,
 ) Target {
 	return Target{
+		Host:                  host,
 		Service:               svc,
 		Port:                  port,
 		Deployment:            depl,
@@ -34,7 +37,7 @@ func NewTarget(
 }
 
 func (t *Target) ServiceURL() (*url.URL, error) {
-	urlStr := fmt.Sprintf("http://%s:%d", t.Service, t.Port)
+	urlStr := fmt.Sprintf("http://%s:%d", t.Host, t.Port)
 	u, err := url.Parse(urlStr)
 	if err != nil {
 		return nil, err

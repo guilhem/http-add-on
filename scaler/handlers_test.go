@@ -141,6 +141,7 @@ func TestGetMetricSpec(t *testing.T) {
 			newRoutingTableFn: func() *routing.Table {
 				ret := routing.NewTable()
 				ret.AddTarget("validHost", routing.NewTarget(
+					"example.com",
 					"testsrv",
 					8080,
 					"testdepl",
@@ -170,6 +171,7 @@ func TestGetMetricSpec(t *testing.T) {
 			newRoutingTableFn: func() *routing.Table {
 				ret := routing.NewTable()
 				ret.AddTarget("validHost", routing.NewTarget(
+					"example.com",
 					"testsrv",
 					8080,
 					"testdepl",

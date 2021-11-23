@@ -11,6 +11,7 @@ func TestTargetServiceURL(t *testing.T) {
 	r := require.New(t)
 
 	target := Target{
+		Host:       "example.com",
 		Service:    "testsvc",
 		Port:       8081,
 		Deployment: "testdeploy",
@@ -18,7 +19,7 @@ func TestTargetServiceURL(t *testing.T) {
 	svcURL, err := target.ServiceURL()
 	r.NoError(err)
 	r.Equal(
-		fmt.Sprintf("%s:%d", target.Service, target.Port),
+		fmt.Sprintf("%s:%d", target.Host, target.Port),
 		svcURL.Host,
 	)
 }
