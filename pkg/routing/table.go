@@ -12,7 +12,6 @@ import (
 var ErrTargetNotFound = errors.New("Target not found")
 
 type Target struct {
-	Host                  string `json:"host"`
 	Service               string `json:"service"`
 	Port                  int    `json:"port"`
 	Deployment            string `json:"deployment"`
@@ -22,7 +21,6 @@ type Target struct {
 
 // NewTarget creates a new Target from the given parameters.
 func NewTarget(
-	host string,
 	svc string,
 	port int,
 	depl string,
@@ -30,7 +28,6 @@ func NewTarget(
 	host string,
 ) Target {
 	return Target{
-		Host:                  host,
 		Service:               svc,
 		Port:                  port,
 		Deployment:            depl,

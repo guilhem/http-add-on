@@ -40,7 +40,7 @@ func (rec *HTTPScaledObjectReconciler) removeApplicationResources(
 	// Delete App ScaledObject
 	scaledObject := &unstructured.Unstructured{}
 	scaledObject.SetNamespace(appInfo.Namespace)
-	scaledObject.SetName(config.AppScaledObjectName(httpso))
+	scaledObject.SetName(httpso.Spec.Host)
 	scaledObject.SetGroupVersionKind(schema.GroupVersionKind{
 		Group:   "keda.sh",
 		Kind:    "ScaledObject",
@@ -129,7 +129,6 @@ func (rec *HTTPScaledObjectReconciler) createOrUpdateApplicationResources(
 		rec.RoutingTable,
 		httpso.Spec.Host,
 		routing.NewTarget(
-			httpso.Spec.Host,
 			httpso.Spec.ScaleTargetRef.Service,
 			int(httpso.Spec.ScaleTargetRef.Port),
 			httpso.Spec.ScaleTargetRef.Deployment,

@@ -26,7 +26,7 @@ func createScaledObjects(
 
 	appScaledObject, appErr := k8s.NewScaledObject(
 		appInfo.Namespace,
-		config.AppScaledObjectName(httpso),
+		httpso.Spec.Host,
 		appInfo.Name,
 		externalScalerHostName,
 		httpso.Spec.Host,
