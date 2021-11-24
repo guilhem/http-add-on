@@ -145,6 +145,7 @@ func TestGetMetricSpec(t *testing.T) {
 					8080,
 					"testdepl",
 					123,
+					"example.com",
 				))
 				return ret
 			},
@@ -174,6 +175,7 @@ func TestGetMetricSpec(t *testing.T) {
 					8080,
 					"testdepl",
 					123,
+					"example.com",
 				))
 				return ret
 			},
