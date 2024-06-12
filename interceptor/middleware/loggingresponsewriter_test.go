@@ -1,6 +1,8 @@
 package middleware
 
 import (
+	"bufio"
+	"net"
 	"net/http"
 	"net/http/httptest"
 
@@ -119,4 +121,53 @@ var _ = Describe("loggingResponseWriter", func() {
 			Expect(w.Code).To(Equal(sc))
 		})
 	})
+
+	Context("Hijack", func() {
+		It("invokes downstream method when it implements http.Hijacker", func() {
+			var (
+				hj  = &hijackTester{}
+				lrw = &loggingResponseWriter{
+					downstreamResponseWriter: hj,
+				}
+				_, _, err = lrw.Hijack()
+			)
+
+			Expect(err).To(BeNil())
+			Expect(hj.called).To(BeTrue())
+		})
+	})
+
+	Context("Hijack", func() {
+		It("returns error when downstreamResponseWriter does not implement http.Hijacker", func() {
+			var (
+				w   = httptest.NewRecorder()
+				lrw = &loggingResponseWriter{
+					downstreamResponseWriter: w,
+				}
+				_, _, err = lrw.Hijack()
+			)
+
+			Expect(err).NotTo(BeNil())
+		})
+	})
 })
+
+type hijackTester struct {
+	called bool
+}
+
+func (hj *hijackTester) Header() http.Header {
+	return http.Header{}
+}
+
+func (hj *hijackTester) Write([]byte) (int, error) {
+	return 0, nil
+}
+
+func (hj *hijackTester) WriteHeader(int) {
+}
+
+func (hj *hijackTester) Hijack() (net.Conn, *bufio.ReadWriter, error) {
+	hj.called = true
+	return nil, nil, nil
+}
