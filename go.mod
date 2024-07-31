@@ -5,6 +5,7 @@ go 1.22.2
 require (
 	github.com/go-logr/logr v1.4.1
 	github.com/google/go-cmp v0.6.0
+	github.com/gorilla/websocket v1.5.1
 	github.com/hashicorp/go-immutable-radix/v2 v2.1.0
 	github.com/kedacore/keda/v2 v2.14.1-0.20240429185716-c55e306af94b
 	github.com/kelseyhightower/envconfig v1.4.0
@@ -45,7 +46,6 @@ require (
 	github.com/cenkalti/backoff/v4 v4.3.0 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
-	github.com/gorilla/websocket v1.5.1 // indirect
 	github.com/grpc-ecosystem/grpc-gateway/v2 v2.19.1 // indirect
 	github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f // indirect
 	go.opentelemetry.io/otel/trace v1.26.0 // indirect
